@@ -1,0 +1,5 @@
+{
+  "name": "Rondas de Seguridad",
+  "description": "Sistema integral de gestión de rondas de vigilancia, escaneo de puntos de control QR y reporte de incidencias en tiempo real con inteligencia artificial.",
+  "requestFramePermissions": ["camera", "geolocation"]
+}

@@ -1,0 +1,180 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Security personnel or supervisor",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "supervisor", "guard", "ceo", "jefe-seguridad"] },
+        "photoURL": { "type": "string" },
+        "active": { "type": "boolean" },
+        "completedRounds": { "type": "number" },
+        "pendingAlerts": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "vacation", "sick", "shift-change"] },
+        "leaveEndDate": { "type": "string", "format": "date" },
+        "leaveReason": { "type": "string" },
+        "delegatedTo": { "type": "string" },
+        "isTemporaryReferente": { "type": "boolean" },
+        "referenteExpiryDate": { "type": "string", "format": "date" }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "Sector": {
+      "title": "Sector",
+      "description": "Industrial sector for patrol",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "type": { "type": "string" },
+        "accessLevel": { "type": "string" },
+        "validity": { "type": "string" },
+        "qrCode": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "Patrol": {
+      "title": "Patrol",
+      "description": "A security patrol round",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "sectorId": { "type": "string" },
+        "startTime": { "type": "string", "format": "date-time" },
+        "endTime": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["in-progress", "completed"] },
+        "currentStep": { "type": "number" },
+        "totalSteps": { "type": "number" }
+      },
+      "required": ["id", "userId", "sectorId", "status"]
+    },
+    "Incident": {
+      "title": "Incident",
+      "description": "Security incident report",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "patrolId": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "aiAnalysis": { "type": "string" },
+        "riskLevel": { "type": "string", "enum": ["bajo", "medio", "alto", "critico"] },
+        "sectorType": { "type": "string" }
+      },
+      "required": ["id", "userId", "description", "timestamp", "riskLevel"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "In-app alert for users",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["incident", "patrol", "system", "alert"] },
+        "read": { "type": "boolean" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "title", "message", "type", "read", "timestamp"]
+    },
+    "Activity": {
+      "title": "Activity",
+      "description": "A log entry for the Activity Center",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "type": { "type": "string", "enum": ["scan", "patrol-start", "patrol-end", "incident"] },
+        "sectorId": { "type": "string" },
+        "sectorName": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "details": { "type": "string" },
+        "duration": { "type": "string" },
+        "incidentId": { "type": "string" },
+        "imageUrl": { "type": "string" }
+      },
+      "required": ["id", "userId", "userName", "type", "timestamp"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "A task assigned by a supervisor",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "assignedTo": { "type": "string" },
+        "assignedToName": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "completed"] },
+        "priority": { "type": "string", "enum": ["low", "medium", "high", "urgent"] },
+        "dueDate": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "status", "priority", "createdAt"]
+    },
+    "AppUpdate": {
+      "title": "AppUpdate",
+      "description": "An update or announcement about the application",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "version": { "type": "string" },
+        "type": { "type": "string", "enum": ["feature", "fix", "announcement"] },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "content", "timestamp"]
+    }
+  },
+  "firestore": {
+    "users": {
+      "schema": { "$ref": "User" },
+      "description": "User profiles and roles"
+    },
+    "sectors": {
+      "schema": { "$ref": "Sector" },
+      "description": "Industrial sectors and QR codes"
+    },
+    "patrols": {
+      "schema": { "$ref": "Patrol" },
+      "description": "Active and completed patrol rounds"
+    },
+    "incidents": {
+      "schema": { "$ref": "Incident" },
+      "description": "Security incident reports"
+    },
+    "notifications": {
+      "schema": { "$ref": "Notification" },
+      "description": "User notifications"
+    },
+    "activities": {
+      "schema": { "$ref": "Activity" },
+      "description": "Logs for the Activity Center"
+    },
+    "tasks": {
+      "schema": { "$ref": "Task" },
+      "description": "Assigned tasks for security personnel"
+    },
+    "app_updates": {
+      "schema": { "$ref": "AppUpdate" },
+      "description": "Announcements and application updates"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Rondas de Seguridad</string>
+    <string name="title_activity_main">Rondas de Seguridad</string>
+    <string name="package_name">com.rondas.seguridad</string>
+    <string name="custom_url_scheme">com.rondas.seguridad</string>
+</resources>
