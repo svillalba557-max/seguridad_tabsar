@@ -291,7 +291,8 @@ function AppContent() {
             }
 
             // Device Binding Verification
-            if (serverData.deviceId && serverData.deviceId !== localDeviceId) {
+            const isExecutive = ['528', '541', '553'].includes(serverData.legajo);
+            if (!isExecutive && serverData.deviceId && serverData.deviceId !== localDeviceId) {
               setUser(null);
               localStorage.removeItem('tabsar_legajo');
               localStorage.removeItem('tabsar_dni');
@@ -352,7 +353,8 @@ function AppContent() {
         }
 
         // Device Binding Verification (Slow Path)
-        if (userData.deviceId && userData.deviceId !== localDeviceId) {
+        const isExecutive = ['528', '541', '553'].includes(userData.legajo);
+        if (!isExecutive && userData.deviceId && userData.deviceId !== localDeviceId) {
           setError('Dispositivo no autorizado. Contacte a la administración para habilitar este equipo.');
           setLoading(false);
           setIsAutoLoggingIn(false);
