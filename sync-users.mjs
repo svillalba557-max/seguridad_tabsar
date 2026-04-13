@@ -16,13 +16,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
 const staff = [
   { name: 'Ricardo Herrmann', role: 'ceo', dni: '11111111', legajo: '553' },
   { name: 'Claudia Luchini', role: 'referente-general', dni: '27239211', legajo: '528' },
   { name: 'Claudia Romero Roura', role: 'rrhh', dni: '0', legajo: '999' },
   { name: 'Alaluf Damian', role: 'jefe-seguridad', dni: '22222222', legajo: '541' },
-  { name: 'VILLALBA CARLOS SEBASTIÁN', role: 'guard', dni: '34597117', legajo: '544' },
+  { name: 'VILLALBA CARLOS SEBASTIÁN', role: 'guard', dni: '34597175', legajo: '544' },
   { name: 'GÓMEZ LEONARDO MARIO', role: 'guard', dni: '26780444', legajo: '557' },
   { name: 'GÓMEZ FERNANDO MARIANO', role: 'guard', dni: '35161793', legajo: '756' },
   { name: 'BARROS NELSON RAMÓN', role: 'guard', dni: '26227925', legajo: '679' },
@@ -33,24 +32,25 @@ const staff = [
 async function run() {
   console.log("Sincronizando perfiles a Firebase...");
   for (const p of staff) {
-    const isExec = ['ceo', 'jefe-seguridad', 'supervisor', 'admin'].includes(p.role);
+    // AQUÍ AGREGUÉ LOS NUEVOS ROLES PARA QUE TENGAN ACCESO TOTAL
+    const isExec = ['ceo', 'jefe-seguridad', 'supervisor', 'admin', 'referente-general', 'rrhh'].includes(p.role);
     const email = p.legajo === '528' ? 'claudia.luchini@seguridad.local' : `${p.legajo}@seguridad.local`;
-    
-    const uid = `local-${p.legajo}`; 
+
+    const uid = `local-${p.legajo}`;
     const payload = {
-        uid: uid,
-        name: p.name,
-        email: email,
-        role: p.role,
-        dni: p.dni,
-        legajo: p.legajo,
-        photoURL: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(p.name)}`,
-        active: true,
-        completedRounds: 0,
-        pendingAlerts: 0,
-        status: 'active',
+      uid: uid,
+      name: p.name,
+      email: email,
+      role: p.role,
+      dni: p.dni,
+      legajo: p.legajo,
+      photoURL: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(p.name)}`,
+      active: true,
+      completedRounds: 0,
+      pendingAlerts: 0,
+      status: 'active',
     };
-    
+
     await setDoc(doc(db, 'users', uid), payload, { merge: true });
     console.log(`Perfil subido: ${p.name} - Legajo: ${p.legajo}`);
   }
