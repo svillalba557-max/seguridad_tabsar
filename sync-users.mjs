@@ -16,16 +16,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
 const staff = [
-  { name: 'Claudia Luchini', role: 'supervisor', dni: '27239211', legajo: '528' },
   { name: 'Ricardo Herrmann', role: 'ceo', dni: '11111111', legajo: '553' },
+  { name: 'Claudia Luchini', role: 'referente-general', dni: '27239211', legajo: '528' },
+  { name: 'Claudia Romero Roura', role: 'rrhh', dni: '0', legajo: '999' },
   { name: 'Alaluf Damian', role: 'jefe-seguridad', dni: '22222222', legajo: '541' },
-  { name: 'TERÁN RICARDO MANUEL', role: 'guard', dni: '29738561', legajo: '379' },
-  { name: 'ZORZOLI JUAN CARLOS', role: 'guard', dni: '30465648', legajo: '524' },
-  { name: 'VILLALBA CARLOS SEBASTIÁN', role: 'guard', dni: '345971175', legajo: '544' },
-  { name: 'GÓMEZ LEONARDO MARIO', role: 'guard', dni: '26788444', legajo: '557' },
+  { name: 'VILLALBA CARLOS SEBASTIÁN', role: 'guard', dni: '34597117', legajo: '544' },
+  { name: 'GÓMEZ LEONARDO MARIO', role: 'guard', dni: '26780444', legajo: '557' },
+  { name: 'GÓMEZ FERNANDO MARIANO', role: 'guard', dni: '35161793', legajo: '756' },
   { name: 'BARROS NELSON RAMÓN', role: 'guard', dni: '26227925', legajo: '679' },
-  { name: 'GÓMEZ FERNANDO MARIANO', role: 'guard', dni: '35161793', legajo: '756' }
+  { name: 'ZORZOLI JUAN CARLOS', role: 'guard', dni: '30465648', legajo: '524' },
+  { name: 'TERÁN RICARDO MANUEL', role: 'guard', dni: '29738561', legajo: '379' }
 ];
 
 async function run() {
